@@ -1166,5 +1166,20 @@ TEST(PercentEncoding, Trailing) {
   EXPECT_EQ(Utility::PercentEncoding::decode("too%20large%"), "too large%");
 }
 
+TEST(PercentEncoding, EncodeAndDecode) {
+  auto encoding_string = "too lar ";
+  auto encoded_string = Utility::PercentEncoding::encode(encoding_string);
+  EXPECT_EQ(Utility::PercentEncoding::decode(encoded_string), encoding_string);
+
+  encoding_string = "too larg%e";
+  encoded_string = Utility::PercentEncoding::encode(encoding_string);
+  EXPECT_EQ(Utility::PercentEncoding::decode(encoded_string), encoding_string);
+
+  encoding_string = "too large%";
+  encoded_string = Utility::PercentEncoding::encode(encoding_string);
+  EXPECT_EQ(Utility::PercentEncoding::decode(encoded_string), encoding_string);
+
+}
+
 } // namespace Http
 } // namespace Envoy
